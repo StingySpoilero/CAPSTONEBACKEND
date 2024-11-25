@@ -1,4 +1,4 @@
-// server/server.mjs
+/// server/server.mjs
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -15,13 +15,18 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    // No longer needed
+mongoose.connect(process.env.MONGODB_URI, { 
+    //no longer needed
  })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// Routes
+// Root route to respond to GET /
+app.get('/', (req, res) => {
+    res.send('API is working');
+});
+
+// Client routes
 app.use('/api/clients', clientRoutes);
 
 // Start server
