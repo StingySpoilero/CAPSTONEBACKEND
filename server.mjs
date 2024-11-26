@@ -1,9 +1,9 @@
-/// server/server.mjs
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import clientRoutes from './routes/clientRoutes.mjs';
+import clientRoutes from './server/routes/clientRoutes.mjs';
+import reviewRoutes from './server/routes/reviews.mjs'; // Import the reviews routes
 
 dotenv.config();
 
@@ -16,8 +16,9 @@ app.use(express.json());
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, { 
-    //no longer needed
- })
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
@@ -28,6 +29,9 @@ app.get('/', (req, res) => {
 
 // Client routes
 app.use('/api/clients', clientRoutes);
+
+// Review routes
+app.use('/api/reviews', reviewRoutes); // Add this line to handle reviews
 
 // Start server
 app.listen(PORT, () => {

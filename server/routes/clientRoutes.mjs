@@ -1,6 +1,7 @@
 // server/routes/clientRoutes.mjs
 import express from 'express';
 import Client from '../models/Client.mjs';
+import API from '../api.mjs';
 
 const router = express.Router();
 
